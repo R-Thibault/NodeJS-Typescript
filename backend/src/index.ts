@@ -30,7 +30,7 @@ const database = new sqlite.Database("./bdd.sqlite", (err) => {
     console.log("Db connected");
   }
 });
-database.get("PRAGMA foreign_keys = ON;");
+
 const start = async () => {
   const schema = await getSchema();
 
@@ -43,7 +43,7 @@ const start = async () => {
     listen: { port: 4000 },
   });
   console.log(`🚀  Server ready at ${url}`);
-  const country = await Country.findOneBy({ name: "USA" });
+  const country = await Country.findOneBy({ country_code: "US" });
   if (!country) {
     await populateBdd();
   }

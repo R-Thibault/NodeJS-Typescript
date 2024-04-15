@@ -39,5 +39,18 @@ export class CountryResolver {
   @Mutation(() => Country)
   async createCountry(
     @Arg("data", () => CountryCreateInput) data: CountryCreateInput
-  ) {}
+  ): Promise<Country> {
+    try {
+      const newCountry = new Country();
+      newCountry.country_code = data.country_code;
+      newCountry.name = data.name;
+      newCountry.emoji = data.emoji;
+      newCountry.continent_code = data.continent_code;
+
+      const datas = await newCountry.save();
+      return datas;
+    } catch (error) {
+      throw new Error(`error occured ${JSON.stringify(error)}`);
+    }
+  }
 }
